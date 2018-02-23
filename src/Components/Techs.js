@@ -24,6 +24,7 @@ class Techs extends Component {
                         id: 0,
                         name: 'JS',
                         notes: 'JavaScript',
+                        syntax: '',
                         courses: 'YT course',
                         links: 'https://www.youtube.com/watch?v=Oioo0IdoEls&index=15&list=PL55RiY5tL51oyA8euSROLjMFZbXaV7skS'
                     },
@@ -31,13 +32,8 @@ class Techs extends Component {
                         id: 1,
                         name: 'HTML',
                         notes: 'HyperTextMarkupLanguage for constructing web pages HyperTextMarkupLanguage for ' +
-                        'constructing web pages HyperTextMarkupLanguage for constructing web pages ' +
-                        'HyperTextMarkupLanguage for constructing web pages HyperTextMarkupLanguage for ' +
-                        'constructing web pages HyperTextMarkupLanguage for constructing web pages ' +
-                        'HyperTextMarkupLanguage for constructing web pages HyperTextMarkupLanguage for ' +
-                        'constructing web pages HyperTextMarkupLanguage for constructing web pages ' +
-                        'HyperTextMarkupLanguage for constructing web pages HyperTextMarkupLanguage for ' +
-                        'constructing web pages HyperTextMarkupLanguage for constructing web pages',
+                        'constructing web pages HyperTextMarkupLanguage for constructing web pages ',
+                        syntax: '',
                         courses: 'YT course4',
                         links: 'https://www.youtube.com'
                     },
@@ -45,6 +41,7 @@ class Techs extends Component {
                         id: 2,
                         name: 'CSS',
                         notes: 'Cascade Style Sheet',
+                        syntax: '',
                         courses: 'YT course #3',
                         links: 'https://www.youtube.com'
                     },
@@ -52,6 +49,7 @@ class Techs extends Component {
                         id: 2,
                         name: 'CSS',
                         notes: 'Cascade Style Sheet',
+                        syntax: '',
                         courses: 'YT course #3',
                         links: 'https://www.youtube.com'
                     }
@@ -75,6 +73,7 @@ class Techs extends Component {
             id: 4,
             name: techName,
             notes: '',
+            syntax: '',
             courses: '',
             links: ''
         };
@@ -88,7 +87,12 @@ class Techs extends Component {
     handleUpdateNotes(newNote, index) {
         let changeTechs = this.state.techs;
         changeTechs[index].notes = newNote;
+        this.setState({techs: changeTechs});
+    }
 
+    handleUpdateSyntax(newSyntaxChange, index){
+        let changeTechs = this.state.techs;
+        changeTechs[index].syntax = newSyntaxChange;
         this.setState({techs: changeTechs});
     }
 
@@ -116,6 +120,7 @@ class Techs extends Component {
                 data={this.state.techData}
                 index={this.state.indexToEdit}
                 updateNotes={this.handleUpdateNotes.bind(this)}
+                updateSyntax={this.handleUpdateSyntax.bind(this)}
                 clickBack={this.handleClickBack.bind(this)}
             />
         }
