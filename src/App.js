@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
-
 import Techs from './Components/Techs';
 import './App.css';
-import TechPages from "./Components/TechPages";
 
 class App extends Component {
     render() {

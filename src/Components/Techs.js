@@ -17,46 +17,28 @@ class Techs extends Component {
     }
 
     componentWillMount() {
+        const stateFromLocalStorage = window.localStorage.getItem('content');
+        if (stateFromLocalStorage) {
+            this.setState({techs: JSON.parse(stateFromLocalStorage)})
+        }
+
         this.setState(
             {
-                techs: [
-                    {
-                        id: 0,
-                        name: 'JS',
-                        notes: 'JavaScript',
-                        syntax: '',
-                        courses: 'YT course',
-                        links: 'https://www.youtube.com/watch?v=Oioo0IdoEls&index=15&list=PL55RiY5tL51oyA8euSROLjMFZbXaV7skS'
-                    },
-                    {
-                        id: 1,
-                        name: 'HTML',
-                        notes: 'HyperTextMarkupLanguage for constructing web pages HyperTextMarkupLanguage for ' +
-                        'constructing web pages HyperTextMarkupLanguage for constructing web pages ',
-                        syntax: '',
-                        courses: 'YT course4',
-                        links: 'https://www.youtube.com'
-                    },
-                    {
-                        id: 2,
-                        name: 'CSS',
-                        notes: 'Cascade Style Sheet',
-                        syntax: '',
-                        courses: 'YT course #3',
-                        links: 'https://www.youtube.com'
-                    },
-                    {
-                        id: 2,
-                        name: 'CSS',
-                        notes: 'Cascade Style Sheet',
-                        syntax: '',
-                        courses: 'YT course #3',
-                        links: 'https://www.youtube.com'
-                    }
-                ]
-
+                // TODO will be fetched from DB
+                techs: []
             }
         );
+    }
+
+    componentDidMount() {
+
+        //TODO NOT WORKING - TypeError: Cannot read property 'techs' of undefined
+        // this.timer = setInterval(function () {
+        //         // window.localStorage.setItem('content', JSON.stringify(this.state.techs));
+        //         console.log('seved to localStorage');
+        //     }
+        //     , 2000
+        // )
     }
 
     onClickTech(tech, i) {
@@ -68,31 +50,52 @@ class Techs extends Component {
     }
 
     handleCreateTech(techName) {
-        console.log(techName);
         let newTech = {
-            id: 4,
             name: techName,
             notes: '',
+            notesEditor: '',
             syntax: '',
             courses: '',
-            links: ''
+            links: []
         };
-
         this.setState({
             techs: this.state.techs.concat(newTech)
         });
-
     }
 
-    handleUpdateNotes(newNote, index) {
+    handleUpdateNotes(newNoteChange, index) {
         let changeTechs = this.state.techs;
-        changeTechs[index].notes = newNote;
+        changeTechs[index].notes = newNoteChange;
         this.setState({techs: changeTechs});
     }
 
-    handleUpdateSyntax(newSyntaxChange, index){
+    handleSaveEditorState(newNoteEditorChange, index) {
+        let changeTechs = this.state.techs;
+        changeTechs[index].notesEditor = newNoteEditorChange;
+        this.setState({techs: changeTechs});
+    }
+
+    handleUpdateSyntax(newSyntaxChange, index) {
         let changeTechs = this.state.techs;
         changeTechs[index].syntax = newSyntaxChange;
+        this.setState({techs: changeTechs});
+    }
+
+    handleAddLink(newLinks, index) {
+        let changeTechs = this.state.techs;
+        if (changeTechs[index].links.includes(newLinks)) {
+            alert('Ta pozycja jest już dodana')
+        } else {
+            changeTechs[index].links = changeTechs[index].links.concat([newLinks]);
+            this.setState({techs: changeTechs});
+        }
+    }
+
+    handleDeleteLink(linkIndex, index) {
+        let changeTechs = this.state.techs;
+        changeTechs[index].links = changeTechs[index].links.filter(function (link) {
+            return link !== changeTechs[index].links[linkIndex]
+        });
         this.setState({techs: changeTechs});
     }
 
@@ -100,8 +103,19 @@ class Techs extends Component {
         this.setState({toReturn: 'dash'})
     }
 
-    render() {
+    handleDeleteTech(index) {
+        let changeTechs = this.state.techs;
+        changeTechs = changeTechs.filter(function (tech) {
+            return tech !== changeTechs[index]
+        });
+        this.setState({
+            techs: changeTechs,
+            toReturn: 'dash'
+        });
 
+    }
+
+    render() {
         if (this.state.toReturn === 'dash') {
             let techItems;
             techItems = this.state.techs.map((tech, i) => {
@@ -109,19 +123,21 @@ class Techs extends Component {
                     <TechItem click={this.onClickTech.bind(this, tech, i)} key={i} tech={tech}/>
                 );
             });
-
             return <TechCards
                 techItems={techItems}
                 createTech={this.handleCreateTech.bind(this)}
             />
-
         } else if (this.state.toReturn === 'tech') {
             return <TechPages
                 data={this.state.techData}
                 index={this.state.indexToEdit}
                 updateNotes={this.handleUpdateNotes.bind(this)}
+                saveEditorState={this.handleSaveEditorState.bind(this)}
                 updateSyntax={this.handleUpdateSyntax.bind(this)}
+                updateLinks={this.handleAddLink.bind(this)}
                 clickBack={this.handleClickBack.bind(this)}
+                deleteLink={this.handleDeleteLink.bind(this)}
+                deleteTech={this.handleDeleteTech.bind(this)}
             />
         }
     }

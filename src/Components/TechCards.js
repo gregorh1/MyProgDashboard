@@ -11,28 +11,37 @@ class TechCards extends Component {
     }
 
     handleChange(event) {
-        this.setState({techName: event.target.value});
+        this.setState({techName: event.target.value.toUpperCase()});
     }
 
     handleSubmit(techName, event) {
         event.preventDefault();
-        this.setState(
-            function () {
-                this.props.createTech(techName);
-            }
-        );
+        if (this.state.techName === '') {
+            alert('Nazwa Technologii nie może być pusta!')
+        } else {
+            this.setState(
+                function () {
+                    this.props.createTech(techName);
+                }, this.setState({techName: ''})
+            );
+        }
     }
+
+    componentDidMount(){
+        this.setState({techName: ''})
+    }
+
 
     render() {
         return (
             <div className="container">
-                <h1 className="text-center m-3">Technologie, ktorych się uczyłem: </h1>
+                <h4 className="text-center m-3">Moje technologie</h4>
                 <div className="row">
 
                     {this.props.techItems}
 
                     <div className="col-lg-3 col-md-4 col-sm-6">
-                        <div className="card text-center mb-2" style={{width: '14rem', height: '7rem'}}>
+                        <div className="card text-center mb-2" style={{height: '7rem'}}>
                             <div className="card-body">
                                 <form onSubmit={this.handleSubmit.bind(this, this.state.techName)}>
                                     <div className="form-group">
@@ -40,6 +49,7 @@ class TechCards extends Component {
                                                className="form-control mb-2"
                                                type="text"
                                                placeholder="Nazwa technologii"
+                                               value={this.state.techName}
                                         />
                                         <input type="submit" className="btn btn-info" value="Dodaj"/>
                                     </div>
