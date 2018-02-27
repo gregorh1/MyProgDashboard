@@ -1,6 +1,6 @@
 {
   "name": "myprogdashboard",
-  "homepage": "https://gregorh1.github.io/MyProgDashboard",
+  "homepage": "https://gregorh1.github.io/MyProgDashboard/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
