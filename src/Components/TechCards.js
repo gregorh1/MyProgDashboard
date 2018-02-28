@@ -27,7 +27,7 @@ class TechCards extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({techName: ''})
     }
 
@@ -35,28 +35,48 @@ class TechCards extends Component {
     render() {
         return (
             <div className="container">
-                <h4 className="text-center m-3">Moje technologie</h4>
-                <div className="row">
-
-                    {this.props.techItems}
-
-                    <div className="col-lg-3 col-md-4 col-sm-6">
-                        <div className="card text-center mb-2" style={{height: '7rem'}}>
-                            <div className="card-body">
-                                <form onSubmit={this.handleSubmit.bind(this, this.state.techName)}>
-                                    <div className="form-group">
-                                        <input onChange={this.handleChange.bind(this)}
-                                               className="form-control mb-2"
-                                               type="text"
-                                               placeholder="Nazwa technologii"
-                                               value={this.state.techName}
-                                        />
-                                        <input type="submit" className="btn btn-info" value="Dodaj"/>
-                                    </div>
-                                </form>
+                <div className="card border-danger">
+                    <div className="card-header text-danger">
+                        <div className="row">
+                            <div className="col text-left">
+                            </div>
+                            <div className="col"><h3 className="text-center">Moje technologie</h3></div>
+                            <div className="col text-right">
+                                <a onClick={this.props.saveToDB} className="btn btn-danger text-white">Zapisz w LocalStorage</a>
                             </div>
                         </div>
+
                     </div>
+                    <div className="card-body">
+                        <div className="row">
+
+                            {this.props.techItems}
+
+                            <div className="col-lg-3 col-md-4 col-sm-6">
+                                <div className="card border-primary text-center mb-2" style={{height: '7rem'}}>
+                                    <div className="card-body">
+                                        <form onSubmit={this.handleSubmit.bind(this, this.state.techName)}>
+                                            <div className="form-group">
+                                                <input onChange={this.handleChange.bind(this)}
+                                                       className="form-control mb-2"
+                                                       type="text"
+                                                       placeholder="Nazwa technologii"
+                                                       value={this.state.techName}
+                                                       required
+                                                />
+                                                <input type="submit" className="btn btn-sm btn-primary text-white" value="Dodaj"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
 
                 </div>
             </div>

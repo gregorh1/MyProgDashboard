@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+// TODO: ADD setInterwal for saveing state to DB, - import Timers from 'react-timers';
 import TechItem from "./TechItem";
 import TechCards from "./TechCards";
 import {browserHistory} from 'react-router';
@@ -16,30 +17,19 @@ class Techs extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const stateFromLocalStorage = window.localStorage.getItem('content');
         if (stateFromLocalStorage) {
             this.setState({techs: JSON.parse(stateFromLocalStorage)})
         }
-
-        this.setState(
-            {
-                // TODO will be fetched from DB
-                techs: []
-            }
-        );
     }
 
-    componentDidMount() {
-
-        //TODO NOT WORKING - TypeError: Cannot read property 'techs' of undefined
-        // this.timer = setInterval(function () {
-        //         // window.localStorage.setItem('content', JSON.stringify(this.state.techs));
-        //         console.log('seved to localStorage');
-        //     }
-        //     , 2000
-        // )
+    handleSaveToDB(){
+        window.localStorage.setItem('content', JSON.stringify(this.state.techs));
+        console.log('seved to localStorage');
     }
+
+
 
     onClickTech(tech, i) {
         this.setState({
@@ -112,6 +102,7 @@ class Techs extends Component {
             techs: changeTechs,
             toReturn: 'dash'
         });
+        this.handleSaveToDB();
 
     }
 
@@ -126,6 +117,7 @@ class Techs extends Component {
             return <TechCards
                 techItems={techItems}
                 createTech={this.handleCreateTech.bind(this)}
+                saveToDB={this.handleSaveToDB.bind(this)}
             />
         } else if (this.state.toReturn === 'tech') {
             return <TechPages

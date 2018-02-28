@@ -40,14 +40,15 @@ class TechPages extends Component {
 
     render() {
         return (
-            <div className="card text-center">
-                <div className="card-header">
+            <div className="card border-primary text-center">
+                <div className="card-header text-primary">
                     <div className="row">
                         <div className="col-2 text-left">
-                            <a onClick={this.props.clickBack} className="btn btn-outline-info">Wstecz</a>
+                            <a onClick={this.props.clickBack} className="btn btn-primary text-white">Wstecz</a>
                         </div>
                         <div className="col"><h3>{this.props.data.name}</h3></div>
-                        <div className="col-2"></div>
+                        <div className="col-2 text-right">
+                        </div>
                     </div>
                     <form>
                         <input className="form-control mt-2"
@@ -60,8 +61,8 @@ class TechPages extends Component {
                     </form>
                 </div>
                 <div className="card-body">
-                    <div className="card border-primary mb-3">
-                        <div className="card-header text-primary">
+                    <div className="card border-secondary mb-3">
+                        <div className="card-header text-secondary">
                             <h5>Mój opis i notatki</h5>
                         </div>
                         <div className="card-body p-2">
@@ -87,15 +88,15 @@ class TechPages extends Component {
                 </div>
                 {/*Footer*/}
                 <div className="card-footer text-muted text-center">
-                    <div className="row align-self-end">
+                    <div className="row align-self-end ml-2 mr-1 ml-1">
 
                         <button onClick={this.props.deleteTech.bind(this, this.props.index)}
-                                className="col btn btn-outline-danger mr-2"
+                                className="col btn btn-danger mr-3"
                                 hidden={!this.state.deleteConfirm}
                         >Jesteś pewien? Nie można tego cofnąć!
                         </button>
                         <button onClick={this.handleDeleteTechConfirm.bind(this)}
-                                className=" col btn btn-outline-success"
+                                className=" col btn btn-success"
                                 hidden={!this.state.deleteConfirm}
                         > Anuluj
                         </button>
@@ -103,7 +104,7 @@ class TechPages extends Component {
                     </div>
 
                     <button onClick={this.handleDeleteTechConfirm.bind(this)}
-                            className="btn btn-outline-info"
+                            className="btn btn-outline-primary"
                             hidden={this.state.deleteConfirm}
                     > Usuń Technologie
                     </button>

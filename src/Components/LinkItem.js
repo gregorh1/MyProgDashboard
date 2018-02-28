@@ -13,7 +13,7 @@ const LinkItem = (props) => {
             </td>
             <td>
                 <button onClick={props.deleteLink.bind(this, props.linkIndex, props.index)}
-                        className="btn-sm btn-primary">Usuń
+                        className="btn btn-sm btn-secondary">Usuń
                 </button>
             </td>
         </tr>

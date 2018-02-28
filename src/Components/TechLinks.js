@@ -59,7 +59,7 @@ class TechLinks extends Component {
                                        placeholder="Link"/>
                             </div>
                             <div className="col-2">
-                                <input type="submit" className="btn btn-primary" value="Dodaj"/>
+                                <input type="submit" className="btn btn-secondary" value="Dodaj"/>
                             </div>
                         </div>
                     </form>
