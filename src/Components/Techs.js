@@ -4,6 +4,7 @@ import TechItem from "./TechItem";
 import TechCards from "./TechCards";
 import {browserHistory} from 'react-router';
 import TechPages from "./TechPages";
+import fire from '../FireBase';
 
 class Techs extends Component {
 
@@ -17,12 +18,16 @@ class Techs extends Component {
         }
     }
 
-    componentDidMount() {
-        const stateFromLocalStorage = window.localStorage.getItem('content');
-        if (stateFromLocalStorage) {
-            this.setState({techs: JSON.parse(stateFromLocalStorage)})
-        }
+    componentDidMount(){
+
     }
+
+    // componentDidMount() {
+    //     const stateFromLocalStorage = window.localStorage.getItem('content');
+    //     if (stateFromLocalStorage) {
+    //         this.setState({techs: JSON.parse(stateFromLocalStorage)})
+    //     }
+    // }
 
     handleSaveToDB(){
         window.localStorage.setItem('content', JSON.stringify(this.state.techs));
