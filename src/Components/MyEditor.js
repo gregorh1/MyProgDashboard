@@ -18,12 +18,10 @@ class MyEditor extends Component {
 
     onEditorStateChange = (editorState) => {
         const contentState = convertToRaw(editorState.getCurrentContent());
-
-
         this.setState(
             {editorState},
             function () {
-                this.props.saveEditorState(contentState, this.props.indexToEdit)
+                this.props.saveEditorState(this.props.index, contentState)
             });
     };
 

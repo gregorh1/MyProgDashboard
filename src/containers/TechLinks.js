@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import LinkItem from "./LinkItem";
+import {connect} from 'react-redux';
+import {linkDescOnSubmit, linkOnDelete} from '../actions/reducerActions';
+import LinkItem from "../components/LinkItem";
 
 class TechLinks extends Component {
     constructor() {
@@ -8,14 +10,6 @@ class TechLinks extends Component {
             link: '',
             desc: ''
         }
-    }
-
-    handleOnSubmit(newLinks, index, event) {
-        event.preventDefault();
-        this.setState(
-            function () {
-                this.props.updateLinks(newLinks, index);
-            });
     }
 
     handleOnChangeLink(event) {
@@ -28,35 +22,38 @@ class TechLinks extends Component {
 
     render() {
         let linkItems;
-        linkItems = this.props.data.links.map((link, i) => {
+        linkItems = this.props.reducer.techs[this.props.index].links.map((link, i) => {
             return <LinkItem
                 link={link}
                 key={i}
                 index={this.props.index}
                 linkIndex={i}
-                deleteLink={this.props.deleteLink}
+                deleteLink={this.props.linkOnDelete}
             />;
         });
-
 
         return (
             <div className="card border-secondary mb-3">
                 <div className="card-header text-secondary"><h5>TODO i linki</h5></div>
                 <div className="card-body">
 
-                    <form onSubmit={this.handleOnSubmit.bind(this, this.state, this.props.index)}>
+                    <form onSubmit={this.props.linkDescOnSubmit.bind(this, this.props.index, this.state)}>
                         <div className="row mb-2">
                             <div className="col">
                                 <input onChange={this.handleOnChangeDesc.bind(this)}
                                        type="text"
                                        className="form-control"
-                                       placeholder="TODO, Task or whatever"/>
+                                       placeholder="TODO, Task or whatever"
+                                       required
+                                />
                             </div>
                             <div className="col-2">
                                 <input onChange={this.handleOnChangeLink.bind(this)}
                                        type="text"
                                        className="form-control"
-                                       placeholder="Link"/>
+                                       placeholder="Link"
+                                       required
+                                />
                             </div>
                             <div className="col-2">
                                 <input type="submit" className="btn btn-secondary" value="Dodaj"/>
@@ -84,4 +81,22 @@ class TechLinks extends Component {
     }
 }
 
-export default TechLinks;
+const mapStateToProps = (state) => {
+    return {
+        reducer: state.reducer
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        linkDescOnSubmit: (index, newLink, event) => {
+            event.preventDefault();
+            dispatch(linkDescOnSubmit(index, newLink));
+        },
+        linkOnDelete: (index, linkIndex) => {
+            dispatch(linkOnDelete(index, linkIndex))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TechLinks);
